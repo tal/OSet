@@ -313,3 +313,17 @@ extension OSet: CustomStringConvertible {
         return "OSet(\(self.a))"
     }
 }
+
+extension OSet: Codable where Element: Codable {
+	public init(from decoder: Decoder) throws {
+		let container = try decoder.singleValueContainer()
+		let array = try container.decode(Array<Element>.self)
+		
+		self.init(array)
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.singleValueContainer()
+		try container.encode(self.a)
+	}
+}
